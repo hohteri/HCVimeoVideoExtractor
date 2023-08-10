@@ -77,7 +77,9 @@ public class HCVimeoVideoExtractor: NSObject {
         let dataURL = configURL.replacingOccurrences(of: "{id}", with: videoId)
         if let url = URL(string: dataURL) {
             let urlRequest = URLRequest(url: url)
-            let session = URLSession.shared
+            let config = URLSession.shared.configuration
+            config.httpMaximumRedirects = 1
+            let session = URLSession(configuration: config)
             
             let task = session.dataTask(with: urlRequest, completionHandler: { (data, response, error) in
                 
